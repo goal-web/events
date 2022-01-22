@@ -3,6 +3,7 @@ package events
 import (
 	"fmt"
 	"github.com/goal-web/contracts"
+	"github.com/qbhy/parallel"
 	"sync"
 )
 
@@ -56,7 +57,18 @@ func (dispatcher *EventDispatcher) handleEvent(event contracts.Event) {
 	defer func() {
 		dispatcher.exceptionHandle(recover(), event)
 	}()
-	for _, listener := range dispatcher.getListeners(event.Event()) {
-		listener.Handle(event)
+
+	listeners := dispatcher.getListeners(event.Event())
+	parallelInstance := parallel.NewParallel(len(listeners))
+
+	for _, listener := range listeners {
+		_ = parallelInstance.Add(func() interface{} {
+			listener.Handle(event)
+			return nil
+		})
+	}
+
+	for _, result := range parallelInstance.Wait() {
+		dispatcher.exceptionHandle(result, event)
 	}
 }
