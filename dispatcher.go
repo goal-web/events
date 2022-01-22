@@ -32,11 +32,9 @@ func (dispatcher *EventDispatcher) getListeners(name string) []contracts.EventLi
 
 func (dispatcher *EventDispatcher) Dispatch(event contracts.Event) {
 	// 处理异常
-	defer func() {
-		defer dispatcher.exceptionHandle(recover(), event)
-	}()
+	defer dispatcher.exceptionHandle(recover(), event)
 
-	if _, isSync := event.(contracts.SyncEvent); isSync {
+	if e, isSync := event.(contracts.SyncEvent); isSync && e.Sync() {
 		// 同步执行事件
 		for _, listener := range dispatcher.getListeners(event.Event()) {
 			listener.Handle(event)
