@@ -34,13 +34,11 @@ func (dispatcher *EventDispatcher) Dispatch(event contracts.Event) {
 	// 处理异常
 	defer func() {
 		if err := recover(); err != nil {
-			go func() {
-				dispatcher.exceptionHandler.Handle(EventException{
-					error:  fmt.Errorf("%v", err),
-					fields: nil,
-					event:  event,
-				})
-			}()
+			dispatcher.exceptionHandler.Handle(EventException{
+				error:  fmt.Errorf("%v", err),
+				fields: nil,
+				event:  event,
+			})
 		}
 	}()
 
