@@ -33,13 +33,7 @@ func (dispatcher *EventDispatcher) getListeners(name string) []contracts.EventLi
 func (dispatcher *EventDispatcher) Dispatch(event contracts.Event) {
 	// 处理异常
 	defer func() {
-		if err := recover(); err != nil {
-			dispatcher.exceptionHandler.Handle(EventException{
-				error:  fmt.Errorf("%v", err),
-				fields: nil,
-				event:  event,
-			})
-		}
+		defer dispatcher.exceptionHandle(recover(), event)
 	}()
 
 	if _, isSync := event.(contracts.SyncEvent); isSync {
@@ -50,9 +44,20 @@ func (dispatcher *EventDispatcher) Dispatch(event contracts.Event) {
 	} else {
 		// 协程执行
 		go func() {
+			defer dispatcher.exceptionHandle(recover(), event)
 			for _, listener := range dispatcher.getListeners(event.Event()) {
 				listener.Handle(event)
 			}
 		}()
+	}
+}
+
+func (dispatcher *EventDispatcher) exceptionHandle(err interface{}, event contracts.Event) {
+	if err != nil {
+		dispatcher.exceptionHandler.Handle(EventException{
+			error:  fmt.Errorf("%v", err),
+			fields: nil,
+			event:  event,
+		})
 	}
 }
