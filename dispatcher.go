@@ -46,9 +46,8 @@ func (dispatcher *EventDispatcher) Dispatch(event contracts.Event) {
 func (dispatcher *EventDispatcher) exceptionHandle(err interface{}, event contracts.Event) {
 	if err != nil {
 		dispatcher.exceptionHandler.Handle(EventException{
-			error:  fmt.Errorf("%v", err),
-			fields: nil,
-			event:  event,
+			error: fmt.Errorf("%v", err),
+			Event: event,
 		})
 	}
 }

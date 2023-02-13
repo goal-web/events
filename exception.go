@@ -6,14 +6,10 @@ import (
 
 type EventException struct {
 	error
-	fields contracts.Fields
-	event  contracts.Event
+	Event    contracts.Event
+	Previous contracts.Exception
 }
 
-func (e EventException) Error() string {
-	return e.error.Error()
-}
-
-func (e EventException) Fields() contracts.Fields {
-	return e.fields
+func (e EventException) GetPrevious() contracts.Exception {
+	return nil
 }
