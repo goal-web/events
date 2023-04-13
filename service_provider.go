@@ -7,6 +7,10 @@ var dispatcher contracts.EventDispatcher
 type ServiceProvider struct {
 }
 
+func NewService() contracts.ServiceProvider {
+	return &ServiceProvider{}
+}
+
 func Dispatch(event contracts.Event) bool {
 	if dispatcher != nil {
 		dispatcher.Dispatch(event)
@@ -15,11 +19,11 @@ func Dispatch(event contracts.Event) bool {
 	return false
 }
 
-func (this ServiceProvider) Stop() {
+func (provider ServiceProvider) Stop() {
 
 }
 
-func (this ServiceProvider) Start() error {
+func (provider ServiceProvider) Start() error {
 	return nil
 }
 

@@ -1,7 +1,7 @@
 module github.com/goal-web/events
 
-go 1.19
+go 1.20
 
-require github.com/goal-web/contracts v0.1.66
+require github.com/goal-web/contracts v0.2.0
 
-require github.com/qbhy/parallel v1.3.0 // indirect
+require github.com/qbhy/parallel v1.4.0

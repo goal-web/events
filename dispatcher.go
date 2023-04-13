@@ -43,7 +43,7 @@ func (dispatcher *EventDispatcher) Dispatch(event contracts.Event) {
 	}
 }
 
-func (dispatcher *EventDispatcher) exceptionHandle(err interface{}, event contracts.Event) {
+func (dispatcher *EventDispatcher) exceptionHandle(err any, event contracts.Event) {
 	if err != nil {
 		dispatcher.exceptionHandler.Handle(EventException{
 			error: fmt.Errorf("%v", err),
@@ -61,7 +61,7 @@ func (dispatcher *EventDispatcher) handleEvent(event contracts.Event) {
 	parallelInstance := parallel.NewParallel(len(listeners))
 
 	for _, listener := range listeners {
-		_ = parallelInstance.Add(func() interface{} {
+		_ = parallelInstance.Add(func() any {
 			listener.Handle(event)
 			return nil
 		})
