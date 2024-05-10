@@ -1,4 +1,4 @@
-github.com/goal-web/contracts v0.2.0 h1:CAk+mLD2dC//DiCV9TAUSN1zopWSrPZ8+/vCxs+cu8E=
-github.com/goal-web/contracts v0.2.0/go.mod h1:33koNCIiQ7GzBmYycynenVtv5E+Jq7lWGZ8vKi5uXJQ=
+github.com/goal-web/contracts v0.3.0 h1:XVdeRGbswyo+e1Tp4SmKD5KJqrMm23eakaARXob7U7A=
+github.com/goal-web/contracts v0.3.0/go.mod h1:33koNCIiQ7GzBmYycynenVtv5E+Jq7lWGZ8vKi5uXJQ=
 github.com/qbhy/parallel v1.4.0 h1:RvdjXbxIRNMG2lA6gkaEOgVhr7JbNy4BljabsD+u9JI=
 github.com/qbhy/parallel v1.4.0/go.mod h1:gjKS0IACnz3SWXkeEOUvPPZZxpeQAOW47jT4cpWPvqU=
