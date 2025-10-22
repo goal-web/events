@@ -1,8 +1,15 @@
 package events
 
-import "github.com/goal-web/contracts"
+import (
+	"sync"
+
+	"github.com/goal-web/application"
+	"github.com/goal-web/contracts"
+)
 
 var dispatcher contracts.EventDispatcher
+
+var once sync.Once
 
 type ServiceProvider struct {
 }
@@ -12,11 +19,13 @@ func NewService() contracts.ServiceProvider {
 }
 
 func Dispatch(event contracts.Event) bool {
-	if dispatcher != nil {
-		dispatcher.Dispatch(event)
-		return true
-	}
-	return false
+	once.Do(func() {
+		if dispatcher == nil {
+			dispatcher = application.Get("evens").(contracts.EventDispatcher)
+		}
+	})
+	dispatcher.Dispatch(event)
+	return true
 }
 
 func (provider ServiceProvider) Stop() {
