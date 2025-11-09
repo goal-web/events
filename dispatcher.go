@@ -2,9 +2,10 @@ package events
 
 import (
 	"fmt"
+	"sync"
+
 	"github.com/goal-web/contracts"
 	"github.com/qbhy/parallel"
-	"sync"
 )
 
 func NewDispatcher(handler contracts.ExceptionHandler) contracts.EventDispatcher {
